@@ -8,7 +8,8 @@ implementing concepts with sympy and writing a solver for problems
 todo
 ----
 
-- create objects of mathematical expressions from `sympy`  :x:
+- create objects of mathematical expressions from `sympy`  :o:
+- general multivariable chain and product rule :x:
 - create decoders that decodes `sympy` objects into numeratble objects :x:
 - write solvers :x:
 
