@@ -51,10 +51,12 @@ class equations4(generaleq):
         dFdy = self.F.diff(self.f(self.y1))*self.f.diff(self.y1)
         return dFdf + dFdy 
 
+    @property
     def grads(self):
         grad_x1y1 = self.chains
+        return grad_x1y1
 
 if __name__ == "__main__":
     q =equations4()
-    print(q.chains)
+    print(q.grads.integrate(q.x1))
     #print(res2multivar(4).integrate(2))
