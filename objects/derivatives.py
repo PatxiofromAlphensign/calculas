@@ -12,6 +12,9 @@ class res2multivar:
         self.vars  = toCountVar(count)
         self.order = order
 
+    def __iter__(self):
+        return iter(self.vars)
+
     def diff(self,order):
         self.k=0
         for var in self.vars:
@@ -28,8 +31,30 @@ class res2multivar:
         integ = 0
         for var in self.vars:
             integ = integ +self.k.integrate(var) 
-        
         return integ
 
+class generaleq:
+    pass
+
+class equations4(generaleq):
+
+    x1,y1, x2,y2 = res2multivar(4)
+    xp1, yp1, xp2,yp2 = [x + res2multivar(4).diff(1) for x in res2multivar(4)]
+    F,f  = sympy.symbols("F f", cls=sympy.Function)
+    eq1 = (F.diff(x2) * F(y1)) + F(x1)*F(y1).diff(y1)
+
+    def __init__(self):
+        pass
+    @property
+    def chains(self):
+        dFdf = self.F.diff(self.f(self.x1))*self.f.diff(self.y1)
+        dFdy = self.F.diff(self.f(self.y1))*self.f.diff(self.y1)
+        return dFdf + dFdy 
+
+    def grads(self):
+        grad_x1y1 = self.chains
+
 if __name__ == "__main__":
-    print(res2multivar(4).integrate(2))
+    q =equations4()
+    print(q.chains)
+    #print(res2multivar(4).integrate(2))
