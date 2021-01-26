@@ -34,7 +34,16 @@ class res2multivar:
         return integ
 
 class generaleq:
-    pass
+    def __init__(self, nvars):
+        self.varss = res2multivar(nvars)
+        self.dvars = [x + res2multivar(4).diff(1) for x in res2multivar(4)]
+        self.F,self.f  = sympy.symbols("F f", cls=sympy.Function)
+
+    def diff(self):
+        res = 0
+        for x,dx in zip(self.varss, self.dvars):
+            res = res + self.F.diff(self.F.diff(self.f(x))) * self.f(x).diff(x) * dx
+        return res
 
 class equations4(generaleq):
 
@@ -54,9 +63,10 @@ class equations4(generaleq):
     @property
     def grads(self):
         grad_x1y1 = self.chains
-        return grad_x1y1
 
 if __name__ == "__main__":
     q =equations4()
-    print(q.grads.integrate(q.x1))
+    qg = generaleq(12)
+    print(qg.diff())
     #print(res2multivar(4).integrate(2))
+
