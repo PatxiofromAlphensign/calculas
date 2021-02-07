@@ -1,11 +1,15 @@
 import sympy
 
-def toCountVar(count):
-        var = ["x%d" % i for i in range(count)] 
+def toCountVar(count, typ=None,name="x"):
+        var = ["%s%d" % (name, i) for i in range(count)] 
         if count > 3:
-            return sympy.symbols(var)
+            return sympy.symbols(var, cls=typ)
         x,y,z = sympy.symbols(var)
         return x,y,z
+
+def toCountFunc(count, name="f"):
+        var = " ".join(["%s%d" % (name, i) for i in range(count)])
+        return sympy.symbols(var, cls=sympy.Function)
 
 class res2multivar:
     def __init__(self, count, order=2):
